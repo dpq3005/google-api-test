@@ -20,4 +20,6 @@ class EventController extends Controller
 
         return view('events', compact('events'));
     }
+
+    
 }

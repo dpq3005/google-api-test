@@ -43,6 +43,7 @@ return [
         'scopes' => [
             \Google_Service_Oauth2::USERINFO_EMAIL,
             \Google_Service_Calendar::CALENDAR,
+            'profile'
         ],
         'approval_prompt' => 'force',
         'access_type' => 'offline',

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\GoogleAccount;
 use App\Services\Google;
 use Illuminate\Http\Request;
+use Google_Service_PeopleService;
 
 class GoogleAccountController extends Controller
 {
@@ -34,14 +35,14 @@ class GoogleAccountController extends Controller
         }
 
         $google->authenticate($request->get('code'));
-        $account = $google->service('Plus')->people->get('me');
-
+        // $account = $google->service('Plus')->people->get('me');
+        $account = $google->service('PeopleService')->people->get('people/me',array('personFields' => 'events,emailAddresses,names,coverPhotos,locales,addresses'));  
         auth()->user()->googleAccounts()->updateOrCreate(
+            // [
+            //     'google_id' => head($account->names)->value,
+            // ],
             [
-                'google_id' => $account->id,
-            ],
-            [
-                'name' => head($account->emails)->value,
+                'name' => head($account->emailAddresses)->value,
                 'token' => $google->getAccessToken(),
             ]
         );
